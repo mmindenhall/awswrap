@@ -33,3 +33,6 @@ awswrap
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# oh-my-claudecode
+.omc/

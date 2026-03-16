@@ -1,0 +1,24 @@
+[profile test-sso]
+sso_start_url = https://my-sso-portal.awsapps.com/start
+sso_region = us-east-1
+sso_account_id = 123456789012
+sso_role_name = MyRole
+region = us-west-2
+
+[profile test-assume]
+role_arn = arn:aws:iam::123456789012:role/AssumedRole
+source_profile = test-sso
+region = eu-west-1
+
+[profile test-session]
+sso_session = my-session
+sso_account_id = 123456789012
+sso_role_name = MyRole
+region = ap-southeast-1
+
+[sso-session my-session]
+sso_start_url = https://my-sso-portal.awsapps.com/start
+sso_region = us-east-1
+
+[default]
+region = us-east-1

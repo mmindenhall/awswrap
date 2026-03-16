@@ -1,0 +1,6 @@
+{
+  "startUrl": "https://my-sso-portal.awsapps.com/start",
+  "region": "us-east-1",
+  "accessToken": "expired-token",
+  "expiresAt": "2020-01-01T00:00:00Z"
+}
