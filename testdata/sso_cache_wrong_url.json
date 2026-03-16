@@ -1,0 +1,6 @@
+{
+  "startUrl": "https://other-portal.awsapps.com/start",
+  "region": "us-east-1",
+  "accessToken": "wrong-url-token",
+  "expiresAt": "2099-12-31T23:59:59Z"
+}
