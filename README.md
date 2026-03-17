@@ -4,9 +4,17 @@ A lightweight Go replacement for [aws2-wrap](https://github.com/linaro-its/aws2-
 
 ## Why awswrap?
 
-aws2-wrap is a Python tool that wraps commands with AWS SSO credentials. It works well, but being a Python package means it requires a Python environment and can be awkward to use with virtualenvs — if you install aws2-wrap globally but activate a project virtualenv, the `aws2-wrap` command may no longer be on your PATH.
+`aws2-wrap` is a Python tool that wraps commands with AWS SSO credentials. It works well, but because it's a Python package, it can conflict with virtualenvs.
 
-awswrap solves this by providing the same core functionality as a single Go binary with no runtime dependencies.
+Consider this example, where `my_script.py` has dependencies installed in an active virtualenv:
+
+```bash
+$ aws2-wrap --profile dev python my_script.py
+```
+
+This works if `aws2-wrap` is installed inside the virtualenv. But if `aws2-wrap` is installed globally (or both globally and in the virtualenv with the global copy earlier in `$PATH`), then `aws2-wrap` resolves to the global installation. The global `aws2-wrap` invokes the global Python — not the virtualenv's — so `my_script.py` fails with missing dependencies.
+
+`awswrap` avoids this entirely. As a standalone Go binary, it has no relationship to your Python environment. It resolves credentials and wraps whatever command you give it, regardless of which Python (or any other runtime) is on your `$PATH`.
 
 ## Installation
 
@@ -24,7 +32,7 @@ go build -o awswrap .
 
 ## Usage
 
-awswrap reads your `~/.aws/config` profiles (including SSO and assume-role chains) and resolves temporary credentials, then either exports them or passes them to a wrapped command.
+`awswrap` reads your `~/.aws/config` profiles (including SSO and assume-role chains) and resolves temporary credentials, then either exports them or passes them to a wrapped command.
 
 ### Wrap a command
 
@@ -80,7 +88,7 @@ On PowerShell, the output uses `$ENV:` syntax instead.
 
 ## Differences from aws2-wrap
 
-awswrap intentionally supports only a subset of aws2-wrap's features:
+`awswrap` intentionally supports only a subset of `aws2-wrap`'s features:
 
 - **Supported:** command wrapping, `--export`, `--exec`, `--profile`, SSO login, assume-role chains
 - **Not supported:** `--generate`, `--generatestdout`, `--process`, `--outprofile`, `--configfile`, `--credentialsfile`
