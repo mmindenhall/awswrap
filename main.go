@@ -18,6 +18,7 @@ type CLIArgs struct {
 
 func parseArgs(args []string) (*CLIArgs, error) {
 	fs := flag.NewFlagSet("awswrap", flag.ContinueOnError)
+	fs.SetInterspersed(false)
 
 	cli := &CLIArgs{}
 	fs.BoolVar(&cli.Export, "export", false, "export credentials as environment variables")

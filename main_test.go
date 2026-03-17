@@ -112,6 +112,22 @@ func TestParseArgs_ExecWithPositionalArgs(t *testing.T) {
 	}
 }
 
+func TestParseArgs_PositionalCommandWithFlags(t *testing.T) {
+	cli, err := parseArgs([]string{"aws", "s3api", "list-objects-v2", "--bucket", "my-bucket", "--output", "text"})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	expected := []string{"aws", "s3api", "list-objects-v2", "--bucket", "my-bucket", "--output", "text"}
+	if len(cli.Command) != len(expected) {
+		t.Fatalf("expected command %v, got %v", expected, cli.Command)
+	}
+	for i, arg := range expected {
+		if cli.Command[i] != arg {
+			t.Errorf("command[%d]: expected %q, got %q", i, arg, cli.Command[i])
+		}
+	}
+}
+
 func TestParseArgs_NoCommand(t *testing.T) {
 	_, err := parseArgs([]string{"--profile", "dev"})
 	if err == nil {
